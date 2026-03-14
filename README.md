@@ -7,8 +7,6 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/ifc)](https://CRAN.R-project.org/package=ifc)
 [![Codecov test
 coverage](https://codecov.io/gh/k5cents/ifc/graph/badge.svg)](https://app.codecov.io/gh/k5cents/ifc)
 [![R build
@@ -103,8 +101,8 @@ tibble(
 
 ## AI Assistance
 
-This package was developed with assistance from
-[Claude Code](https://claude.ai/claude-code). All generated code was reviewed,
+This package was developed with assistance from [Claude
+Code](https://claude.ai/claude-code). All generated code was reviewed,
 tested, and is the responsibility of the package author.
 
 ## Code of Conduct
