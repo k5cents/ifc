@@ -1,0 +1,126 @@
+# ifc
+
+The ifc package implements the [International Fixed
+Calendar](https://en.wikipedia.org/wiki/International_Fixed_Calendar) as
+a proper S3 vector class. The IFC divides each year into 13 months of
+exactly 28 days, with a Year Day appended at year’s end (and a Leap Day
+after IFC June 28 in leap years). Because each month always starts on
+Sunday and ends on Saturday, the day-of-week for any IFC date is fully
+deterministic from the day-of-month number.
+
+## Installation
+
+Install the development version from
+[GitHub](https://github.com/k5cents/ifc):
+
+``` r
+# install.packages("pak")
+pak::pak("k5cents/ifc")
+```
+
+## Usage
+
+``` r
+library(ifc)
+library(tibble)
+
+# Convert from Gregorian
+ifc_date("2024-06-18")
+#> <ifc_date[1]>
+#> [1] "2024-07-01"
+
+# Construct from IFC components (Sol 1, 2024)
+ifc_ymd(2024, 7, 1)
+#> <ifc_date[1]>
+#> [1] "2024-07-01"
+
+# Intercalary days
+ifc_year_day(2024)
+#> <ifc_date[1]>
+#> [1] "2024 Year Day"
+
+ifc_leap_day(2024)
+#> <ifc_date[1]>
+#> [1] "2024 Leap Day"
+
+# Accessors
+x <- ifc_ymd(2024, 7, 14)
+ifc_wday(x, label = TRUE)  # deterministic: day 14 = Saturday
+#> [1] "Sat"
+
+format(x, "%B %d, %Y")
+#> [1] "Sol 14, 2024"
+
+# Tibble display
+tibble(
+  gregorian = as.Date(c("2024-01-01", "2024-06-17", "2024-06-18", "2024-12-31")),
+  ifc       = ifc_date(gregorian)
+)
+#> # A tibble: 4 × 2
+#>   gregorian        ifc
+#>   <date>         <ifc>
+#> 1 2024-01-01 2024 Jan 01
+#> 2 2024-06-17 2024 Leap Day
+#> 3 2024-06-18 2024 Sol 01
+#> 4 2024-12-31 2024 Year Day
+```
+
+## Code of Conduct
+
+Please note that the ifc project is released with a [Contributor Code of
+Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
+
+# Package index
+
+## Construct
+
+Create `ifc_date` vectors.
+
+- [`ifc_date()`](https://k5cents.github.io/ifc/reference/ifc_date.md) :
+  Convert to an IFC date
+- [`ifc_ymd()`](https://k5cents.github.io/ifc/reference/ifc_ymd.md) :
+  Create an IFC date from year, month, and day components
+- [`ifc_year_day()`](https://k5cents.github.io/ifc/reference/ifc_year_day.md)
+  : Create an IFC Year Day
+- [`ifc_leap_day()`](https://k5cents.github.io/ifc/reference/ifc_leap_day.md)
+  : Create an IFC Leap Day
+
+## Access
+
+Extract components from an `ifc_date`.
+
+- [`ifc_year()`](https://k5cents.github.io/ifc/reference/ifc_accessors.md)
+  [`ifc_month()`](https://k5cents.github.io/ifc/reference/ifc_accessors.md)
+  [`ifc_day()`](https://k5cents.github.io/ifc/reference/ifc_accessors.md)
+  [`ifc_yday()`](https://k5cents.github.io/ifc/reference/ifc_accessors.md)
+  [`ifc_wday()`](https://k5cents.github.io/ifc/reference/ifc_accessors.md)
+  [`is_year_day()`](https://k5cents.github.io/ifc/reference/ifc_accessors.md)
+  [`is_leap_day()`](https://k5cents.github.io/ifc/reference/ifc_accessors.md)
+  : Extract components from an IFC date
+
+## Format and coerce
+
+- [`format(`*`<ifc_date>`*`)`](https://k5cents.github.io/ifc/reference/format.ifc_date.md)
+  : Format an IFC date as a string
+- [`as.Date(`*`<ifc_date>`*`)`](https://k5cents.github.io/ifc/reference/ifc_coerce.md)
+  [`as.POSIXct(`*`<ifc_date>`*`)`](https://k5cents.github.io/ifc/reference/ifc_coerce.md)
+  [`as.POSIXlt(`*`<ifc_date>`*`)`](https://k5cents.github.io/ifc/reference/ifc_coerce.md)
+  [`as.integer(`*`<ifc_date>`*`)`](https://k5cents.github.io/ifc/reference/ifc_coerce.md)
+  [`as.double(`*`<ifc_date>`*`)`](https://k5cents.github.io/ifc/reference/ifc_coerce.md)
+  [`as.character(`*`<ifc_date>`*`)`](https://k5cents.github.io/ifc/reference/ifc_coerce.md)
+  : Coerce an IFC date to a base R date type
+
+## Constants
+
+IFC month and weekday name vectors.
+
+- [`IFC_MONTH_NAMES`](https://k5cents.github.io/ifc/reference/IFC_MONTH_NAMES.md)
+  : IFC month names (1–13)
+- [`IFC_MONTH_ABBR`](https://k5cents.github.io/ifc/reference/IFC_MONTH_ABBR.md)
+  : IFC month abbreviations (1–13)
+- [`IFC_WDAY_NAMES`](https://k5cents.github.io/ifc/reference/IFC_WDAY_NAMES.md)
+  : IFC weekday names (Sunday = 1, Saturday = 7)
+- [`IFC_WDAY_ABBR`](https://k5cents.github.io/ifc/reference/IFC_WDAY_ABBR.md)
+  : IFC weekday abbreviations
+
