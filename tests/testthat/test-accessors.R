@@ -81,7 +81,7 @@ test_that("ifc_wday(label=TRUE) returns NA for special days", {
 })
 
 test_that("accessors error on non-ifc_date input", {
-  expect_error(ifc_year(42),       class = "vctrs_error")
-  expect_error(ifc_month("2024"),  class = "vctrs_error")
-  expect_error(ifc_wday(Sys.Date()), class = "vctrs_error")
+  expect_error(ifc_year(42),         class = "vctrs_error_assert_ptype")
+  expect_error(ifc_month("2024"),    class = "vctrs_error_assert_ptype")
+  expect_error(ifc_wday(Sys.Date()), class = "vctrs_error_assert_ptype")
 })

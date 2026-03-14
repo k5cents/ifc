@@ -36,7 +36,12 @@ ifc_date.POSIXlt <- function(x) {
 
 #' @export
 ifc_date.character <- function(x) {
-  d <- suppressWarnings(as.Date(x))
+  # as.Date() either warns (parseable format, invalid value) or errors
+  # (completely unrecognizable string). Handle both.
+  d <- tryCatch(
+    suppressWarnings(as.Date(x)),
+    error = function(e) structure(rep(NA_real_, length(x)), class = "Date")
+  )
   bad <- is.na(d) & !is.na(x)
   if (any(bad)) {
     cli_abort(

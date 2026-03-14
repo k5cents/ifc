@@ -69,12 +69,17 @@ test_that("format handles duplicate tokens", {
   expect_equal(format(x, "%Y/%Y"), "2024/2024")
 })
 
-test_that("format returns empty string for wday/month tokens on special days", {
+test_that("special_fmt override applies regardless of format tokens", {
   yd <- ifc_year_day(2024)
-  expect_equal(format(yd, "%a"), "")
-  expect_equal(format(yd, "%A"), "")
-  expect_equal(format(yd, "%u"), "")
-  expect_equal(format(yd, "%m"), "")
-  expect_equal(format(yd, "%d"), "")
-  expect_equal(format(yd, "%B"), "")
+  # special_fmt always wins, even when a specific token is requested
+  expect_equal(format(yd, "%d"), "2024 Year Day")
+  expect_equal(format(yd, "%m"), "2024 Year Day")
+  expect_equal(format(yd, "%B"), "2024 Year Day")
+})
+
+test_that("special_fmt = NULL exposes raw token output for special days", {
+  yd <- ifc_year_day(2024)
+  expect_equal(format(yd, "%a", special_fmt = NULL), "")
+  expect_equal(format(yd, "%m", special_fmt = NULL), "")
+  expect_equal(format(yd, "%j", special_fmt = NULL), "366")   # leap 2024
 })
