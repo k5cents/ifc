@@ -101,17 +101,31 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"%a %B %d"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Sat Sol 14"</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
-<span>  gregorian <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2024-01-01"</span>, <span class="st">"2024-06-17"</span>, <span class="st">"2024-06-18"</span>, <span class="st">"2024-12-31"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  ifc       <span class="op">=</span> <span class="fu"><a href="reference/ifc_date.html">ifc_date</a></span><span class="op">(</span><span class="va">gregorian</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">firsts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2025/1/1"</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"month"</span>, length.out <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>  gregorian <span class="op">=</span> <span class="va">firsts</span>,</span>
+<span>  fixed <span class="op">=</span> <span class="fu"><a href="reference/ifc_date.html">ifc_date</a></span><span class="op">(</span><span class="va">gregorian</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 4 × 2</span></span>
-<span><span class="co">#&gt;   gregorian            ifc</span></span>
-<span><span class="co">#&gt;   &lt;date&gt;             &lt;ifc&gt;</span></span>
-<span><span class="co">#&gt; 1 2024-01-01   2024 Jan 01</span></span>
-<span><span class="co">#&gt; 2 2024-06-17 2024 Leap Day</span></span>
-<span><span class="co">#&gt; 3 2024-06-18   2024 Sol 01</span></span>
-<span><span class="co">#&gt; 4 2024-12-31 2024 Year Day</span></span></code></pre></div>
+<span><span class="co">#&gt; # A tibble: 12 × 2</span></span>
+<span><span class="co">#&gt;    gregorian        fixed</span></span>
+<span><span class="co">#&gt;    &lt;date&gt;           &lt;ifc&gt;</span></span>
+<span><span class="co">#&gt;  1 2025-01-01 2025 Jan 01</span></span>
+<span><span class="co">#&gt;  2 2025-02-01 2025 Feb 04</span></span>
+<span><span class="co">#&gt;  3 2025-03-01 2025 Mar 04</span></span>
+<span><span class="co">#&gt;  4 2025-04-01 2025 Apr 07</span></span>
+<span><span class="co">#&gt;  5 2025-05-01 2025 May 09</span></span>
+<span><span class="co">#&gt;  6 2025-06-01 2025 Jun 12</span></span>
+<span><span class="co">#&gt;  7 2025-07-01 2025 Sol 14</span></span>
+<span><span class="co">#&gt;  8 2025-08-01 2025 Jul 17</span></span>
+<span><span class="co">#&gt;  9 2025-09-01 2025 Aug 20</span></span>
+<span><span class="co">#&gt; 10 2025-10-01 2025 Sep 22</span></span>
+<span><span class="co">#&gt; 11 2025-11-01 2025 Oct 25</span></span>
+<span><span class="co">#&gt; 12 2025-12-01 2025 Nov 27</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="ai-assistance">AI Assistance<a class="anchor" aria-label="anchor" href="#ai-assistance"></a>
+</h2>
+<p>This package was developed with assistance from <a href="https://claude.ai/claude-code" class="external-link">Claude Code</a>. All generated code was reviewed, tested, and is the responsibility of the package author.</p>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
