@@ -38,30 +38,42 @@ ifc_ymd(2024, 7, 1)
 ifc_year_day(2024)
 #> <ifc_date[1]>
 #> [1] "2024 Year Day"
-
 ifc_leap_day(2024)
 #> <ifc_date[1]>
 #> [1] "2024 Leap Day"
+```
 
-# Accessors
+``` r
 x <- ifc_ymd(2024, 7, 14)
+
+ifc_year(x)
+#> [1] 2024
+ifc_month(x)   # 7 = Sol
+#> [1] 7
+ifc_day(x)
+#> [1] 14
 ifc_wday(x, label = TRUE)  # deterministic: day 14 = Saturday
 #> [1] "Sat"
+```
 
+``` r
 format(x, "%B %d, %Y")
 #> [1] "Sol 14, 2024"
+format(x, "%a %B %d")
+#> [1] "Sat Sol 14"
+```
 
-# Tibble display
+``` r
 tibble(
   gregorian = as.Date(c("2024-01-01", "2024-06-17", "2024-06-18", "2024-12-31")),
   ifc       = ifc_date(gregorian)
 )
 #> # A tibble: 4 × 2
-#>   gregorian        ifc
-#>   <date>         <ifc>
-#> 1 2024-01-01 2024 Jan 01
+#>   gregorian            ifc
+#>   <date>             <ifc>
+#> 1 2024-01-01   2024 Jan 01
 #> 2 2024-06-17 2024 Leap Day
-#> 3 2024-06-18 2024 Sol 01
+#> 3 2024-06-18   2024 Sol 01
 #> 4 2024-12-31 2024 Year Day
 ```
 
