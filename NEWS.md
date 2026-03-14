@@ -1,5 +1,17 @@
 # ifc (development)
 
+* Added `ifc_today()` as a convenience wrapper for `ifc_date(Sys.Date())`.
+
+* `ifc_date` now integrates with **lubridate**: `lubridate::year()`,
+  `lubridate::month()`, `lubridate::mday()`, `lubridate::wday()`,
+  `lubridate::yday()`, and `lubridate::as_date()` all return correct IFC values
+  when called on an `ifc_date`. Previously, these functions fell back to
+  `as.POSIXlt()` and returned Gregorian month/day values, which are wrong for
+  IFC dates (e.g. `lubridate::month()` on an IFC Sol date would return 6 or 7
+  depending on the Gregorian month, rather than 7). lubridate is not a hard
+  dependency; the methods are registered at load time and only activate if
+  lubridate is installed.
+
 * `ifc_date()` now correctly errors on unparseable character strings such as
   `ifc_date("not-a-date")`. Previously, invalid strings silently produced an
   `ifc_date` wrapping `NA` because `as.Date()` returns `NA` with a warning

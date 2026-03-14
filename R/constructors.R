@@ -106,6 +106,18 @@ ifc_year_day <- function(year) {
   new_ifc_date(doy_to_epoch(year, doy))
 }
 
+#' Today's date in the IFC
+#'
+#' A convenience wrapper around `ifc_date(Sys.Date())`.
+#'
+#' @return An `ifc_date` of length 1 representing today.
+#' @export
+#' @examples
+#' ifc_today()
+ifc_today <- function() {
+  ifc_date(Sys.Date())
+}
+
 #' Create an IFC Leap Day
 #'
 #' Leap Day is the intercalary day inserted after IFC June 28 in leap years.

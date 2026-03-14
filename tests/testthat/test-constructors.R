@@ -92,6 +92,13 @@ test_that("ifc_date() passes NA_character_ through as NA", {
   expect_true(is.na(vec_data(x)))
 })
 
+test_that("ifc_today() returns a length-1 ifc_date", {
+  x <- ifc_today()
+  expect_s3_class(x, "ifc_date")
+  expect_length(x, 1L)
+  expect_equal(as.Date(x), Sys.Date())
+})
+
 test_that("ifc_date() accepts POSIXlt", {
   p <- as.POSIXlt("2024-03-15", tz = "UTC")
   x <- ifc_date(p)
