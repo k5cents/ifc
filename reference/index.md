@@ -12,6 +12,8 @@ Create `ifc_date` vectors.
   : Create an IFC Year Day
 - [`ifc_leap_day()`](https://k5cents.github.io/ifc/reference/ifc_leap_day.md)
   : Create an IFC Leap Day
+- [`ifc_today()`](https://k5cents.github.io/ifc/reference/ifc_today.md)
+  : Today's date in the IFC
 
 ## Access
 

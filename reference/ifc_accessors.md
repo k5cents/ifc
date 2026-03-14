@@ -64,9 +64,9 @@ ifc_day(x)  # 14
 #> [1] 14
 ifc_yday(x)
 #> [1] 183
-ifc_wday(x)           # integer
+ifc_wday(x)           # 7 (Saturday: day 14 = (14-1)%%7+1 = 7)
 #> [1] 7
-ifc_wday(x, label = TRUE)   # "Wednesday"
+ifc_wday(x, label = TRUE)   # "Sat"
 #> [1] "Sat"
 is_year_day(ifc_year_day(2024))  # TRUE
 #> [1] TRUE
