@@ -51,3 +51,13 @@ test_that("lubridate::as_date() converts ifc_date to Date", {
   expect_s3_class(d, "Date")
   expect_equal(d, as.Date("2024-06-18"))
 })
+
+test_that("lubridate::tz() returns empty string (date-only, no timezone)", {
+  expect_equal(lubridate::tz(ifc_ymd(2024, 7, 1)), "")
+})
+
+test_that("lubridate::as_datetime() works without warning", {
+  x <- ifc_ymd(2024, 7, 1)
+  expect_no_warning(lubridate::as_datetime(x))
+  expect_s3_class(lubridate::as_datetime(x), "POSIXct")
+})

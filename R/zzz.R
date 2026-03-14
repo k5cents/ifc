@@ -5,4 +5,5 @@
   vctrs::s3_register("lubridate::wday",    "ifc_date")
   vctrs::s3_register("lubridate::yday",    "ifc_date")
   vctrs::s3_register("lubridate::as_date", "ifc_date")
+  vctrs::s3_register("lubridate::tz",      "ifc_date")
 }

@@ -39,3 +39,10 @@ yday.ifc_date <- function(x) {
 as_date.ifc_date <- function(x, ...) {
   as.Date(x)
 }
+
+# ifc_date is a date-only class with no time component, so tz() returns ""
+# (same as base R Date). Without this, lubridate::as_datetime() warns:
+# "Don't know how to compute timezone for object of class ifc_date/vctrs_vctr"
+tz.ifc_date <- function(x) {
+  ""
+}
