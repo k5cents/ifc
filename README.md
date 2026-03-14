@@ -79,17 +79,26 @@ format(x, "%a %B %d")
 ```
 
 ``` r
+firsts <- seq(as.Date("2025/1/1"), by = "month", length.out = 12)
 tibble(
-  gregorian = as.Date(c("2024-01-01", "2024-06-17", "2024-06-18", "2024-12-31")),
-  ifc       = ifc_date(gregorian)
+  gregorian = firsts,
+  fixed = ifc_date(gregorian)
 )
-#> # A tibble: 4 × 2
-#>   gregorian            ifc
-#>   <date>             <ifc>
-#> 1 2024-01-01   2024 Jan 01
-#> 2 2024-06-17 2024 Leap Day
-#> 3 2024-06-18   2024 Sol 01
-#> 4 2024-12-31 2024 Year Day
+#> # A tibble: 12 × 2
+#>    gregorian        fixed
+#>    <date>           <ifc>
+#>  1 2025-01-01 2025 Jan 01
+#>  2 2025-02-01 2025 Feb 04
+#>  3 2025-03-01 2025 Mar 04
+#>  4 2025-04-01 2025 Apr 07
+#>  5 2025-05-01 2025 May 09
+#>  6 2025-06-01 2025 Jun 12
+#>  7 2025-07-01 2025 Sol 14
+#>  8 2025-08-01 2025 Jul 17
+#>  9 2025-09-01 2025 Aug 20
+#> 10 2025-10-01 2025 Sep 22
+#> 11 2025-11-01 2025 Oct 25
+#> 12 2025-12-01 2025 Nov 27
 ```
 
 ## Code of Conduct
