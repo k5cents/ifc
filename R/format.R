@@ -103,8 +103,3 @@ print.ifc_date <- function(x, ...) {
   invisible(x)
 }
 
-#' @export
-obj_print_header.ifc_date <- function(x, ...) {
-  cat("<ifc_date[", length(x), "]>\n", sep = "")
-  invisible(x)
-}

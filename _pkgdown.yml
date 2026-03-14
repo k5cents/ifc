@@ -1,0 +1,30 @@
+url: https://k5cents.github.io/ifc/
+template:
+  bootstrap: 5
+
+reference:
+  - title: Construct
+    desc: Create `ifc_date` vectors.
+    contents:
+      - ifc_date
+      - ifc_ymd
+      - ifc_year_day
+      - ifc_leap_day
+
+  - title: Access
+    desc: Extract components from an `ifc_date`.
+    contents:
+      - ifc_accessors
+
+  - title: Format and coerce
+    contents:
+      - format.ifc_date
+      - ifc_coerce
+
+  - title: Constants
+    desc: IFC month and weekday name vectors.
+    contents:
+      - IFC_MONTH_NAMES
+      - IFC_MONTH_ABBR
+      - IFC_WDAY_NAMES
+      - IFC_WDAY_ABBR

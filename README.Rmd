@@ -1,0 +1,105 @@
+---
+output: github_document
+editor_options:
+  chunk_output_type: console
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  error = FALSE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+if (!interactive()) {
+  options(width = 99)
+}
+```
+
+# ifc
+
+<!-- badges: start -->
+[![Lifecycle: experimental][life_badge]][life_link]
+[![CRAN status][cran_badge]][cran_link]
+[![Codecov test coverage][cov_badge]][cov_link]
+[![R build status][ga_badge]][ga_link]
+<!-- badges: end -->
+
+The ifc package implements the [International Fixed Calendar][ifc_wiki] as a
+proper S3 vector class. The IFC divides each year into 13 months of exactly 28
+days, with a Year Day appended at year's end (and a Leap Day after IFC June 28
+in leap years). Because each month always starts on Sunday and ends on Saturday,
+the day-of-week for any IFC date is fully deterministic from the day-of-month
+number.
+
+## Installation
+
+Install the development version from [GitHub][gh]:
+
+```{r install, eval=FALSE}
+# install.packages("pak")
+pak::pak("k5cents/ifc")
+```
+
+## Usage
+
+```{r usage}
+library(ifc)
+library(tibble)
+
+# Convert from Gregorian
+ifc_date("2024-06-18")
+
+# Construct from IFC components (Sol 1, 2024)
+ifc_ymd(2024, 7, 1)
+
+# Intercalary days
+ifc_year_day(2024)
+ifc_leap_day(2024)
+```
+
+```{r accessors}
+x <- ifc_ymd(2024, 7, 14)
+
+ifc_year(x)
+ifc_month(x)   # 7 = Sol
+ifc_day(x)
+ifc_wday(x, label = TRUE)  # deterministic: day 14 = Saturday
+```
+
+```{r format}
+format(x, "%B %d, %Y")
+format(x, "%a %B %d")
+```
+
+```{r tibble}
+tibble(
+  gregorian = as.Date(c("2024-01-01", "2024-06-17", "2024-06-18", "2024-12-31")),
+  ifc       = ifc_date(gregorian)
+)
+```
+
+## Code of Conduct
+
+Please note that the ifc project is released with a
+[Contributor Code of Conduct][coc]. By contributing to this project, you agree
+to abide by its terms.
+
+<!-- links -->
+[ifc_wiki]: https://en.wikipedia.org/wiki/International_Fixed_Calendar
+[gh]: https://github.com/k5cents/ifc
+[coc]: https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html
+
+[life_badge]: https://img.shields.io/badge/lifecycle-experimental-orange.svg
+[life_link]: https://lifecycle.r-lib.org/articles/stages.html#experimental
+[cran_badge]: https://www.r-pkg.org/badges/version/ifc
+[cran_link]: https://CRAN.R-project.org/package=ifc
+[cov_badge]: https://codecov.io/gh/k5cents/ifc/graph/badge.svg
+[cov_link]: https://app.codecov.io/gh/k5cents/ifc
+[ga_badge]: https://github.com/k5cents/ifc/actions/workflows/R-CMD-check.yaml/badge.svg
+[ga_link]: https://github.com/k5cents/ifc/actions/workflows/R-CMD-check.yaml

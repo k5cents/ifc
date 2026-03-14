@@ -16,13 +16,14 @@ is fully deterministic from the day-of-month number.
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://k5cents.github.io/ifc/}
   \item \url{https://github.com/k5cents/ifc}
   \item Report bugs at \url{https://github.com/k5cents/ifc/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Kiernan Nicholls \email{k5cents@gmail.com} [copyright holder]
+\strong{Maintainer}: Kiernan Nicholls \email{k5cents@gmail.com} (\href{https://orcid.org/0000-0002-9229-7897}{ORCID}) [copyright holder]
 
 }
 \keyword{internal}
