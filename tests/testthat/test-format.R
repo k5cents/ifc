@@ -63,3 +63,18 @@ test_that("Sol 14 is a Saturday (day 14 wday = 7)", {
   expect_equal(format(x, "%a"), "Sat")
   expect_equal(format(x, "%u"), "7")
 })
+
+test_that("format handles duplicate tokens", {
+  x <- ifc_ymd(2024, 7, 1)
+  expect_equal(format(x, "%Y/%Y"), "2024/2024")
+})
+
+test_that("format returns empty string for wday/month tokens on special days", {
+  yd <- ifc_year_day(2024)
+  expect_equal(format(yd, "%a"), "")
+  expect_equal(format(yd, "%A"), "")
+  expect_equal(format(yd, "%u"), "")
+  expect_equal(format(yd, "%m"), "")
+  expect_equal(format(yd, "%d"), "")
+  expect_equal(format(yd, "%B"), "")
+})

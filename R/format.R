@@ -53,10 +53,10 @@ format.ifc_date <- function(
   mof <- ifelse(is.na(d$month), "", IFC_MONTH_NAMES[d$month])
   mob <- ifelse(is.na(d$month), "", IFC_MONTH_ABBR[d$month])
   jdy <- formatC(d$doy, width = 3, flag = "0", mode = "integer")
-  wdn <- as.character((d$day - 1L) %% 7L + 1L)   # NA -> "NA", fixed below
-  wdn[is.na(d$day)] <- ""
-  wda <- ifelse(is.na(d$day), "", IFC_WDAY_ABBR[(d$day - 1L) %% 7L + 1L])
-  wdf <- ifelse(is.na(d$day), "", IFC_WDAY_NAMES[(d$day - 1L) %% 7L + 1L])
+  wi  <- (d$day - 1L) %% 7L + 1L  # NA propagates for special days
+  wdn <- ifelse(is.na(wi), "", as.character(wi))
+  wda <- ifelse(is.na(wi), "", IFC_WDAY_ABBR[wi])
+  wdf <- ifelse(is.na(wi), "", IFC_WDAY_NAMES[wi])
 
   tokens <- list(
     "%Y" = yr4, "%y" = yr2,
@@ -70,7 +70,7 @@ format.ifc_date <- function(
   for (nm in names(tokens)) {
     vals <- tokens[[nm]]
     out  <- mapply(
-      FUN = function(s, v) sub(nm, v, s, fixed = TRUE),
+      FUN = function(s, v) gsub(nm, v, s, fixed = TRUE),
       out, vals,
       SIMPLIFY = TRUE, USE.NAMES = FALSE
     )
@@ -78,23 +78,19 @@ format.ifc_date <- function(
   out <- gsub("%%", "%", out, fixed = TRUE)
 
   # Overwrite special days with their own format
-  yd_fmt  <- special_fmt[["year_day"]]
-  ld_fmt  <- special_fmt[["leap_day"]]
+  yd_fmt <- special_fmt[["year_day"]]
+  ld_fmt <- special_fmt[["leap_day"]]
 
-  apply_special <- function(mask, fmt_str) {
-    if (!is.null(fmt_str) && any(mask)) {
-      out[mask] <<- sub("%Y", yr4[mask], fmt_str, fixed = TRUE)
-    }
-  }
-  apply_special(d$is_year_day, yd_fmt)
-  apply_special(d$is_leap_day, ld_fmt)
+  if (!is.null(yd_fmt) && any(d$is_year_day))
+    out[d$is_year_day] <- gsub("%Y", yr4[d$is_year_day], yd_fmt, fixed = TRUE)
+  if (!is.null(ld_fmt) && any(d$is_leap_day))
+    out[d$is_leap_day] <- gsub("%Y", yr4[d$is_leap_day], ld_fmt, fixed = TRUE)
 
   out
 }
 
 #' @export
 print.ifc_date <- function(x, ...) {
-  cat(format(new_vctr(integer(0L), class = "ifc_date")), sep = "")
   cat("<ifc_date[", length(x), "]>\n", sep = "")
   if (length(x) > 0L) {
     out <- format(x)

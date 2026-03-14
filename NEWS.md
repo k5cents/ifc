@@ -1,3 +1,19 @@
+# ifc (development)
+
+* `ifc_date()` now correctly errors on unparseable character strings such as
+  `ifc_date("not-a-date")`. Previously, invalid strings silently produced an
+  `ifc_date` wrapping `NA` because `as.Date()` returns `NA` with a warning
+  rather than throwing an error.
+
+* `format.ifc_date()` now correctly replaces all occurrences of a token when
+  the same token appears more than once in the format string (e.g.
+  `format(x, "%Y/%Y")` now returns `"2024/2024"`). Previously only the first
+  occurrence was replaced.
+
+* Accessor functions (`ifc_year()`, `ifc_month()`, etc.) now produce a proper
+  vctrs type error when passed a non-`ifc_date` object instead of the opaque
+  `stopifnot` message.
+
 # ifc 0.1.0
 
 * Initial release.

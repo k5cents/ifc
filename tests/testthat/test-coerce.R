@@ -49,3 +49,33 @@ test_that("vec_ptype2: ifc_date + ifc_date = ifc_date", {
   pt <- vctrs::vec_ptype2(x, x)
   expect_s3_class(pt, "ifc_date")
 })
+
+test_that("c(ifc_date, ifc_date) produces ifc_date vector", {
+  x <- ifc_ymd(2024, 1, 1)
+  y <- ifc_ymd(2024, 7, 1)
+  z <- c(x, y)
+  expect_s3_class(z, "ifc_date")
+  expect_length(z, 2L)
+  expect_equal(ifc_month(z), c(1L, 7L))
+})
+
+test_that("c(ifc_date, Date) coerces to ifc_date", {
+  x <- ifc_ymd(2024, 1, 1)
+  d <- as.Date("2024-06-18")
+  z <- c(x, d)
+  expect_s3_class(z, "ifc_date")
+  expect_length(z, 2L)
+})
+
+test_that("as.POSIXlt.ifc_date works", {
+  x <- ifc_ymd(2024, 1, 1)
+  p <- as.POSIXlt(x)
+  expect_s3_class(p, "POSIXlt")
+  expect_equal(as.Date(p), as.Date("2024-01-01"))
+})
+
+test_that("as.double.ifc_date returns epoch days as double", {
+  d <- as.Date("2024-01-01")
+  x <- ifc_date(d)
+  expect_identical(as.double(x), as.double(unclass(d)))
+})

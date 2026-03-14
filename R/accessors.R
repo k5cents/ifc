@@ -11,7 +11,7 @@ NULL
 #' x <- ifc_ymd(2024, 7, 14)
 #' ifc_year(x)
 ifc_year <- function(x) {
-  stopifnot(inherits(x, "ifc_date"))
+  vec_assert(x, new_ifc_date())
   ifc_decompose(x)$year
 }
 
@@ -21,7 +21,7 @@ ifc_year <- function(x) {
 #' @examples
 #' ifc_month(x)  # 7 (Sol)
 ifc_month <- function(x) {
-  stopifnot(inherits(x, "ifc_date"))
+  vec_assert(x, new_ifc_date())
   ifc_decompose(x)$month
 }
 
@@ -31,7 +31,7 @@ ifc_month <- function(x) {
 #' @examples
 #' ifc_day(x)  # 14
 ifc_day <- function(x) {
-  stopifnot(inherits(x, "ifc_date"))
+  vec_assert(x, new_ifc_date())
   ifc_decompose(x)$day
 }
 
@@ -41,7 +41,7 @@ ifc_day <- function(x) {
 #' @examples
 #' ifc_yday(x)
 ifc_yday <- function(x) {
-  stopifnot(inherits(x, "ifc_date"))
+  vec_assert(x, new_ifc_date())
   ifc_decompose(x)$doy
 }
 
@@ -53,10 +53,10 @@ ifc_yday <- function(x) {
 #'   by `(day - 1) %% 7 + 1`.
 #' @export
 #' @examples
-#' ifc_wday(x)           # integer
-#' ifc_wday(x, label = TRUE)   # "Wednesday"
+#' ifc_wday(x)           # 7 (Saturday: day 14 = (14-1)%%7+1 = 7)
+#' ifc_wday(x, label = TRUE)   # "Sat"
 ifc_wday <- function(x, label = FALSE, abbr = TRUE) {
-  stopifnot(inherits(x, "ifc_date"))
+  vec_assert(x, new_ifc_date())
   d   <- ifc_decompose(x)
   day <- d$day
   n   <- (day - 1L) %% 7L + 1L  # NA propagates for special days
@@ -71,7 +71,7 @@ ifc_wday <- function(x, label = FALSE, abbr = TRUE) {
 #' @examples
 #' is_year_day(ifc_year_day(2024))  # TRUE
 is_year_day <- function(x) {
-  stopifnot(inherits(x, "ifc_date"))
+  vec_assert(x, new_ifc_date())
   ifc_decompose(x)$is_year_day
 }
 
@@ -81,6 +81,6 @@ is_year_day <- function(x) {
 #' @examples
 #' is_leap_day(ifc_leap_day(2024))  # TRUE
 is_leap_day <- function(x) {
-  stopifnot(inherits(x, "ifc_date"))
+  vec_assert(x, new_ifc_date())
   ifc_decompose(x)$is_leap_day
 }

@@ -74,3 +74,14 @@ test_that("is_year_day() and is_leap_day() are correct", {
   expect_false(is_leap_day(ifc_ymd(2024, 1, 1)))
   expect_false(is_leap_day(ifc_year_day(2024)))
 })
+
+test_that("ifc_wday(label=TRUE) returns NA for special days", {
+  expect_true(is.na(ifc_wday(ifc_year_day(2024), label = TRUE)))
+  expect_true(is.na(ifc_wday(ifc_leap_day(2024), label = TRUE)))
+})
+
+test_that("accessors error on non-ifc_date input", {
+  expect_error(ifc_year(42),       class = "vctrs_error")
+  expect_error(ifc_month("2024"),  class = "vctrs_error")
+  expect_error(ifc_wday(Sys.Date()), class = "vctrs_error")
+})

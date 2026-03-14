@@ -36,15 +36,14 @@ ifc_date.POSIXlt <- function(x) {
 
 #' @export
 ifc_date.character <- function(x) {
-  d <- tryCatch(
-    as.Date(x),
-    error = function(e) {
-      cli_abort(
-        "Cannot parse {.val {x}} as a date. Expected ISO 8601 {.val YYYY-MM-DD}.",
-        call = caller_env()
-      )
-    }
-  )
+  d <- suppressWarnings(as.Date(x))
+  bad <- is.na(d) & !is.na(x)
+  if (any(bad)) {
+    cli_abort(
+      "Cannot parse {.val {x[bad]}} as a date. Expected ISO 8601 {.val YYYY-MM-DD}.",
+      call = caller_env()
+    )
+  }
   ifc_date(d)
 }
 

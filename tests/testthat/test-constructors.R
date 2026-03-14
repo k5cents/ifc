@@ -80,3 +80,21 @@ test_that("ifc_leap_day() works", {
 test_that("ifc_leap_day() errors on non-leap year", {
   expect_error(ifc_leap_day(2023), class = "rlang_error")
 })
+
+test_that("ifc_date() errors on unparseable character", {
+  expect_error(ifc_date("not-a-date"), class = "rlang_error")
+  expect_error(ifc_date("2024-13-01"), class = "rlang_error")
+})
+
+test_that("ifc_date() passes NA_character_ through as NA", {
+  x <- ifc_date(NA_character_)
+  expect_s3_class(x, "ifc_date")
+  expect_true(is.na(vec_data(x)))
+})
+
+test_that("ifc_date() accepts POSIXlt", {
+  p <- as.POSIXlt("2024-03-15", tz = "UTC")
+  x <- ifc_date(p)
+  expect_s3_class(x, "ifc_date")
+  expect_equal(as.Date(x), as.Date("2024-03-15"))
+})
