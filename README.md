@@ -101,6 +101,12 @@ tibble(
 #> 12 2025-12-01 2025 Nov 27
 ```
 
+## AI Assistance
+
+This package was developed with assistance from
+[Claude Code](https://claude.ai/claude-code). All generated code was reviewed,
+tested, and is the responsibility of the package author.
+
 ## Code of Conduct
 
 Please note that the ifc project is released with a [Contributor Code of
