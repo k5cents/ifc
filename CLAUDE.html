@@ -109,6 +109,42 @@
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">document</span><span class="op">(</span><span class="op">)</span>   <span class="co"># regenerate docs + NAMESPACE</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">test</span><span class="op">(</span><span class="op">)</span>       <span class="co"># run tests</span></span></code></pre></div>
 </div>
+<div class="section level2">
+<h2 id="session-start-checklist">Session Start Checklist<a class="anchor" aria-label="anchor" href="#session-start-checklist"></a></h2>
+<p>At the beginning of every session, before touching any code:</p>
+<ol style="list-style-type: decimal"><li>
+<p><strong>Scan open GitHub issues</strong> — especially the v0.2.0 milestone:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">gh</span> issue list <span class="at">--state</span> open</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="ex">gh</span> issue list <span class="at">--milestone</span> v0.2.0</span></code></pre></div>
+</li>
+<li>
+<p><strong>Check CI status</strong> — confirm all workflows are green before adding new work:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="ex">gh</span> run list <span class="at">--limit</span> 5</span></code></pre></div>
+</li>
+</ol></div>
+<div class="section level2">
+<h2 id="available-skills-posit-plugins">Available Skills (Posit Plugins)<a class="anchor" aria-label="anchor" href="#available-skills-posit-plugins"></a></h2>
+<p>Claude Code has access to the following skills installed from Posit. Use them proactively rather than doing the equivalent work manually:</p>
+<table class="table"><colgroup><col width="35%"><col width="65%"></colgroup><thead><tr class="header"><th>Skill</th>
+<th>When to use</th>
+</tr></thead><tbody><tr class="odd"><td><code>posit-dev:critical-code-reviewer</code></td>
+<td>Before any PR or release — adversarial review of R source, tests, and docs</td>
+</tr><tr class="even"><td><code>r-lib:cran-extrachecks</code></td>
+<td>Before CRAN submission — catches URL validation, <code>Authors@R</code> format, <code>\dontrun</code> policy, etc.</td>
+</tr><tr class="odd"><td><code>r-lib:testing-r-packages</code></td>
+<td>When writing or expanding tests — testthat 3 best practices, snapshots, fixtures</td>
+</tr><tr class="even"><td><code>r-lib:r-package-development</code></td>
+<td>General devtools/roxygen2/usethis questions</td>
+</tr><tr class="odd"><td><code>r-lib:cli</code></td>
+<td>When adding or improving user-facing messages with <code>cli_abort</code>/<code>cli_warn</code>
+</td>
+</tr><tr class="even"><td><code>r-lib:lifecycle</code></td>
+<td>When deprecating or superseding functions</td>
+</tr><tr class="odd"><td><code>open-source:create-release-checklist</code></td>
+<td>When starting a new release — generates a GitHub issue checklist</td>
+</tr><tr class="even"><td><code>open-source:release-post</code></td>
+<td>When writing a release announcement blog post</td>
+</tr></tbody></table></div>
 </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

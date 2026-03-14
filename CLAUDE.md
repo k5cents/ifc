@@ -99,3 +99,37 @@ devtools::check()      # full R CMD check
 devtools::document()   # regenerate docs + NAMESPACE
 devtools::test()       # run tests
 ```
+
+## Session Start Checklist
+
+At the beginning of every session, before touching any code:
+
+1.  **Scan open GitHub issues** — especially the v0.2.0 milestone:
+
+    ``` bash
+    gh issue list --state open
+    gh issue list --milestone v0.2.0
+    ```
+
+2.  **Check CI status** — confirm all workflows are green before adding
+    new work:
+
+    ``` bash
+    gh run list --limit 5
+    ```
+
+## Available Skills (Posit Plugins)
+
+Claude Code has access to the following skills installed from Posit. Use
+them proactively rather than doing the equivalent work manually:
+
+| Skill                                  | When to use                                                                                  |
+|----------------------------------------|----------------------------------------------------------------------------------------------|
+| `posit-dev:critical-code-reviewer`     | Before any PR or release — adversarial review of R source, tests, and docs                   |
+| `r-lib:cran-extrachecks`               | Before CRAN submission — catches URL validation, `Authors@R` format, `\dontrun` policy, etc. |
+| `r-lib:testing-r-packages`             | When writing or expanding tests — testthat 3 best practices, snapshots, fixtures             |
+| `r-lib:r-package-development`          | General devtools/roxygen2/usethis questions                                                  |
+| `r-lib:cli`                            | When adding or improving user-facing messages with `cli_abort`/`cli_warn`                    |
+| `r-lib:lifecycle`                      | When deprecating or superseding functions                                                    |
+| `open-source:create-release-checklist` | When starting a new release — generates a GitHub issue checklist                             |
+| `open-source:release-post`             | When writing a release announcement blog post                                                |
