@@ -10,6 +10,7 @@ reference:
       - ifc_ymd
       - ifc_year_day
       - ifc_leap_day
+      - ifc_today
 
   - title: Access
     desc: Extract components from an `ifc_date`.
