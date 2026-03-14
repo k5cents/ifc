@@ -58,8 +58,8 @@ ifc_year(x)
 ifc_month(x)  # 7 (Sol)
 ifc_day(x)  # 14
 ifc_yday(x)
-ifc_wday(x)           # integer
-ifc_wday(x, label = TRUE)   # "Wednesday"
+ifc_wday(x)           # 7 (Saturday: day 14 = (14-1)\%\%7+1 = 7)
+ifc_wday(x, label = TRUE)   # "Sat"
 is_year_day(ifc_year_day(2024))  # TRUE
 is_leap_day(ifc_leap_day(2024))  # TRUE
 }

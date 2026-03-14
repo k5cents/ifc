@@ -7,7 +7,7 @@
 \title{ifc: International Fixed Calendar Date Class}
 \description{
 The \code{ifc} package implements the International Fixed Calendar as a proper
-S3 vector class built on the \link{vctrs} framework. The IFC divides each year
+S3 vector class built on the \href{https://vctrs.r-lib.org/}{vctrs} framework. The IFC divides each year
 into 13 months of exactly 28 days, with a Year Day appended at year's end
 (and a Leap Day after IFC June 28 in leap years). Because each month always
 starts on Sunday and ends on Saturday, the day-of-week for any IFC date
