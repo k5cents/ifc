@@ -51,12 +51,13 @@ doy_to_epoch <- function(year, doy) {
 # Returns a list: month (1-13, NA for special), day (1-28, NA for special),
 # is_year_day (logical), is_leap_day (logical)
 doy_to_ifc <- function(year, doy) {
-  n      <- length(doy)
-  leap   <- is_leap_year(year)
-  n_days <- 365L + as.integer(leap)
+  n       <- length(doy)
+  na_mask <- is.na(doy) | is.na(year)
+  leap    <- is_leap_year(year)
+  n_days  <- 365L + as.integer(leap)
 
-  is_yd  <- doy == n_days          # Year Day
-  is_ld  <- leap & doy == 169L     # Leap Day
+  is_yd  <- !na_mask & doy == n_days   # Year Day
+  is_ld  <- !na_mask & leap & doy == 169L  # Leap Day
   special <- is_yd | is_ld
 
   # For regular days, collapse the leap-day gap
@@ -65,14 +66,14 @@ doy_to_ifc <- function(year, doy) {
   month <- integer(n)
   day   <- integer(n)
 
-  reg <- !special
+  reg <- !special & !na_mask
   if (any(reg)) {
     month[reg] <- as.integer(ceiling(doy_adj[reg] / 28))
     day[reg]   <- as.integer((doy_adj[reg] - 1L) %% 28L + 1L)
   }
 
-  month[special] <- NA_integer_
-  day[special]   <- NA_integer_
+  month[special | na_mask] <- NA_integer_
+  day[special | na_mask]   <- NA_integer_
 
   list(
     month       = month,

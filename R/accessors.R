@@ -66,6 +66,25 @@ ifc_wday <- function(x, label = FALSE, abbr = TRUE) {
 }
 
 #' @rdname ifc_accessors
+#' @return `ifc_week()`: integer week-of-year 1–52, or `NA` for Year Day /
+#'   Leap Day. Because every IFC month is exactly 4 weeks and every year has
+#'   exactly 52 weeks, this is computed directly from month and day:
+#'   `(month - 1) * 4 + ceiling(day / 7)`.
+#' @export
+#' @examples
+#' ifc_week(ifc_ymd(2024, 7, 14))   # 26: 6 full months (24 weeks) + week 2 of Sol
+#' ifc_week(ifc_year_day(2024))      # NA
+ifc_week <- function(x) {
+  vec_assert(x, new_ifc_date())
+  d <- ifc_decompose(x)
+  ifelse(
+    is.na(d$month),
+    NA_integer_,
+    (d$month - 1L) * 4L + as.integer(ceiling(d$day / 7L))
+  )
+}
+
+#' @rdname ifc_accessors
 #' @return `is_year_day()`: logical, `TRUE` if the date is Year Day.
 #' @export
 #' @examples

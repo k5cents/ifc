@@ -46,3 +46,59 @@ as_date.ifc_date <- function(x, ...) {
 tz.ifc_date <- function(x) {
   ""
 }
+
+# lubridate::as_datetime() promotes an ifc_date to ifc_datetime at midnight UTC
+as_datetime.ifc_date <- function(x, tz = "UTC", ...) {
+  ifc_datetime(x, tz = tz)
+}
+
+# ---- ifc_datetime compat methods ----
+
+year.ifc_datetime <- function(x) {
+  ifc_year(ifc_date(as.Date(x)))
+}
+
+month.ifc_datetime <- function(x, label = FALSE, abbr = TRUE, ...) {
+  m <- ifc_month(ifc_date(as.Date(x)))
+  if (!label) return(m)
+  nm <- if (abbr) IFC_MONTH_ABBR else IFC_MONTH_NAMES
+  ifelse(is.na(m), NA_character_, nm[m])
+}
+
+mday.ifc_datetime <- function(x) {
+  ifc_day(ifc_date(as.Date(x)))
+}
+
+wday.ifc_datetime <- function(x, label = FALSE, abbr = TRUE,
+                              week_start = NULL, ...) {
+  ifc_wday(ifc_date(as.Date(x)), label = label, abbr = abbr)
+}
+
+yday.ifc_datetime <- function(x) {
+  ifc_yday(ifc_date(as.Date(x)))
+}
+
+as_date.ifc_datetime <- function(x, ...) {
+  as.Date(x)
+}
+
+# Return the stored timezone, matching lubridate::tz() behaviour for POSIXct
+tz.ifc_datetime <- function(x) {
+  tz <- attr(x, "tzone")
+  if (is.null(tz)) "UTC" else tz
+}
+
+# with_tz() converts the displayed timezone without changing the instant
+with_tz.ifc_datetime <- function(x, tzone = "UTC", ...) {
+  if (is.null(tzone) || identical(tzone, "")) tzone <- "UTC"
+  new_ifc_datetime(vec_data(x), tzone = tzone)
+}
+
+# force_tz() reinterprets the wall-clock time in a new timezone
+force_tz.ifc_datetime <- function(x, tzone = "UTC", ...) {
+  if (is.null(tzone) || identical(tzone, "")) tzone <- "UTC"
+  old_tz  <- attr(x, "tzone") %||% "UTC"
+  pt_old  <- structure(vec_data(x), class = c("POSIXct", "POSIXt"), tzone = old_tz)
+  pt_new  <- lubridate::force_tz(pt_old, tzone = tzone)
+  new_ifc_datetime(as.double(pt_new), tzone = tzone)
+}

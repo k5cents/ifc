@@ -1,5 +1,52 @@
 # ifc (development)
 
+* New `ifc_datetime` class — an IFC-aware datetime backed by POSIXct seconds
+  since epoch, with timezone support. Construct via `ifc_datetime(x, tz)` from
+  `POSIXct`, `POSIXlt`, `character` (ISO 8601), `ifc_date` (promoted to
+  midnight), or numeric epoch seconds. `ifc_now(tz)` returns the current
+  instant. New time-component accessors `ifc_hour()`, `ifc_minute()`, and
+  `ifc_second()` extract sub-day components. `format.ifc_datetime()` extends
+  IFC date tokens with `%H`, `%M`, `%S`, `%Z`, and `%z`; intercalary days
+  (`%B` / `%b`) render as `"Year Day"` or `"Leap Day"` while time tokens
+  remain fully functional. Includes full tibble/pillar integration
+  (`type_sum`, `pillar_shaft`) and coercion to `POSIXct`, `POSIXlt`, `Date`,
+  and `character`. lubridate compat methods (`year`, `month`, `mday`, `wday`,
+  `yday`, `tz`, `as_date`, `with_tz`, `force_tz`) are registered for
+  `ifc_datetime`; `as_datetime.ifc_date` promotes an `ifc_date` to
+  `ifc_datetime` at midnight in the specified timezone.
+
+* `ifc_floor()`, `ifc_ceiling()`, and `ifc_round()` round an `ifc_date`
+  to the nearest `"week"`, `"month"`, or `"year"` boundary. IFC's fixed-length
+  units make these exact: week = 7 days, month = 28 days. Intercalary days
+  are handled explicitly: their week floor is the preceding Sunday (7 days
+  back), their month floor is day 1 of the preceding month (28 days back), and
+  their ceiling always advances to the next regular boundary (Leap Day ->
+  Sol 1; Year Day -> Jan 1 of following year). Ties in `ifc_round()` go to
+  the floor.
+
+* New `ifc_week()` accessor returns the IFC week-of-year (1–52) for regular
+  dates, and `NA` for Year Day / Leap Day. Because every IFC month is exactly
+  4 weeks, this is computed directly from month and day:
+  `(month - 1) * 4 + ceiling(day / 7)`.
+
+* New calendar arithmetic functions `add_months()`, `add_years()`, and
+  `add_weeks()` for adding whole IFC units to a date. `add_months()` and
+  `add_years()` use calendar arithmetic (same IFC day-of-month preserved),
+  correctly handling the June/Sol boundary in leap years. All three functions
+  recycle `x` and `n` to a common length.
+
+* New `ifc_seq(from, to, by, length.out)` generates IFC-native date sequences.
+  `by` accepts `"day"`, `"week"`, `"month"`, or `"year"`. Month and year
+  stepping use calendar arithmetic (same IFC day-of-month preserved) rather
+  than raw day offsets, so the June/Sol boundary in leap years is handled
+  correctly. Direction is inferred automatically from `from` and `to`.
+
+* New `ifc_parse(x, format = "%Y-%m-%d")` parses IFC date strings back to
+  `ifc_date` objects, completing the round-trip with `format.ifc_date()`.
+  Supports the same token set (`%Y`, `%m`, `%d`, `%B`, `%b`, `%j`, `%y`).
+  Intercalary days (`"YYYY Year Day"`, `"YYYY Leap Day"`) are always recognised
+  by their canonical string form regardless of `format`.
+
 * Added `ifc_today()` as a convenience wrapper for `ifc_date(Sys.Date())`.
 
 * `ifc_date` now integrates with **lubridate**: `lubridate::year()`,
