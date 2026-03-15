@@ -17,5 +17,5 @@ An `ifc_date` of length 1 representing today.
 ``` r
 ifc_today()
 #> <ifc_date[1]>
-#> [1] "2026-03-17"
+#> [1] "2026-03-18"
 ```

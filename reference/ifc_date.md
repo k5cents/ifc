@@ -26,7 +26,7 @@ An `ifc_date` vector.
 ``` r
 ifc_date(Sys.Date())
 #> <ifc_date[1]>
-#> [1] "2026-03-17"
+#> [1] "2026-03-18"
 ifc_date("2024-06-18")  # IFC Sol 1 in 2024
 #> <ifc_date[1]>
 #> [1] "2024-07-01"

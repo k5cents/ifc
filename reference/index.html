@@ -32,9 +32,9 @@
     </div>
 
     <div class="section level2">
-      <h2 id="construct">Construct<a class="anchor" aria-label="anchor" href="#construct"></a></h2>
+      <h2 id="ifc-dates">IFC dates<a class="anchor" aria-label="anchor" href="#ifc-dates"></a></h2>
 
-      <div class="section-desc"><p>Create <code>ifc_date</code> vectors.</p></div>
+      <div class="section-desc"><p>Construct and work with <code>ifc_date</code> vectors.</p></div>
 
       <dl></dl></div><div class="section level2">
 
@@ -75,33 +75,15 @@
 
         </dt>
         <dd>Today's date in the IFC</dd>
-      </dl></div><div class="section level2">
-      <h2 id="access">Access<a class="anchor" aria-label="anchor" href="#access"></a></h2>
 
-      <div class="section-desc"><p>Extract components from an <code>ifc_date</code>.</p></div>
+        <dt>
 
-      <dl></dl></div><div class="section level2">
-
-
-
-
-      <dl><dt>
-
-          <code><a href="ifc_accessors.html">ifc_year()</a></code> <code><a href="ifc_accessors.html">ifc_month()</a></code> <code><a href="ifc_accessors.html">ifc_day()</a></code> <code><a href="ifc_accessors.html">ifc_yday()</a></code> <code><a href="ifc_accessors.html">ifc_wday()</a></code> <code><a href="ifc_accessors.html">is_year_day()</a></code> <code><a href="ifc_accessors.html">is_leap_day()</a></code>
+          <code><a href="ifc_accessors.html">ifc_year()</a></code> <code><a href="ifc_accessors.html">ifc_month()</a></code> <code><a href="ifc_accessors.html">ifc_day()</a></code> <code><a href="ifc_accessors.html">ifc_yday()</a></code> <code><a href="ifc_accessors.html">ifc_wday()</a></code> <code><a href="ifc_accessors.html">ifc_week()</a></code> <code><a href="ifc_accessors.html">is_year_day()</a></code> <code><a href="ifc_accessors.html">is_leap_day()</a></code>
 
         </dt>
         <dd>Extract components from an IFC date</dd>
-      </dl></div><div class="section level2">
-      <h2 id="format-and-coerce">Format and coerce<a class="anchor" aria-label="anchor" href="#format-and-coerce"></a></h2>
 
-
-
-      <dl></dl></div><div class="section level2">
-
-
-
-
-      <dl><dt>
+        <dt>
 
           <code><a href="format.ifc_date.html">format(<i>&lt;ifc_date&gt;</i>)</a></code>
 
@@ -114,6 +96,105 @@
 
         </dt>
         <dd>Coerce an IFC date to a base R date type</dd>
+      </dl></div><div class="section level2">
+      <h2 id="ifc-datetimes">IFC datetimes<a class="anchor" aria-label="anchor" href="#ifc-datetimes"></a></h2>
+
+      <div class="section-desc"><p>Construct and work with <code>ifc_datetime</code> vectors (date + time + timezone).</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="ifc_datetime.html">ifc_datetime()</a></code>
+
+        </dt>
+        <dd>Convert to an IFC datetime</dd>
+
+        <dt>
+
+          <code><a href="ifc_now.html">ifc_now()</a></code>
+
+        </dt>
+        <dd>Current date-time in the IFC</dd>
+
+        <dt>
+
+          <code><a href="ifc_datetime_accessors.html">ifc_hour()</a></code> <code><a href="ifc_datetime_accessors.html">ifc_minute()</a></code> <code><a href="ifc_datetime_accessors.html">ifc_second()</a></code>
+
+        </dt>
+        <dd>Extract time components from an IFC datetime</dd>
+
+        <dt>
+
+          <code><a href="format.ifc_datetime.html">format(<i>&lt;ifc_datetime&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Format an IFC datetime as a string</dd>
+
+        <dt>
+
+          <code><a href="ifc_datetime_coerce.html">as.POSIXct(<i>&lt;ifc_datetime&gt;</i>)</a></code> <code><a href="ifc_datetime_coerce.html">as.POSIXlt(<i>&lt;ifc_datetime&gt;</i>)</a></code> <code><a href="ifc_datetime_coerce.html">as.Date(<i>&lt;ifc_datetime&gt;</i>)</a></code> <code><a href="ifc_datetime_coerce.html">as.character(<i>&lt;ifc_datetime&gt;</i>)</a></code> <code><a href="ifc_datetime_coerce.html">as.double(<i>&lt;ifc_datetime&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Coerce an IFC datetime to a base R datetime type</dd>
+      </dl></div><div class="section level2">
+      <h2 id="parse">Parse<a class="anchor" aria-label="anchor" href="#parse"></a></h2>
+
+      <div class="section-desc"><p>Parse IFC-formatted strings back to <code>ifc_date</code>.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="ifc_parse.html">ifc_parse()</a></code>
+
+        </dt>
+        <dd>Parse IFC date strings</dd>
+      </dl></div><div class="section level2">
+      <h2 id="sequences-and-arithmetic">Sequences and arithmetic<a class="anchor" aria-label="anchor" href="#sequences-and-arithmetic"></a></h2>
+
+      <div class="section-desc"><p>Generate sequences and perform calendar arithmetic on IFC dates.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="ifc_seq.html">ifc_seq()</a></code>
+
+        </dt>
+        <dd>Generate a sequence of IFC dates</dd>
+
+        <dt>
+
+          <code><a href="ifc_add.html">add_weeks()</a></code> <code><a href="ifc_add.html">add_months()</a></code> <code><a href="ifc_add.html">add_years()</a></code>
+
+        </dt>
+        <dd>Add IFC calendar units to a date</dd>
+      </dl></div><div class="section level2">
+      <h2 id="rounding">Rounding<a class="anchor" aria-label="anchor" href="#rounding"></a></h2>
+
+      <div class="section-desc"><p>Round IFC dates to the nearest week, month, or year boundary.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="ifc_round.html">ifc_floor()</a></code> <code><a href="ifc_round.html">ifc_ceiling()</a></code> <code><a href="ifc_round.html">ifc_round()</a></code>
+
+        </dt>
+        <dd>Round an IFC date to a unit boundary</dd>
       </dl></div><div class="section level2">
       <h2 id="constants">Constants<a class="anchor" aria-label="anchor" href="#constants"></a></h2>
 
