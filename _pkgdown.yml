@@ -3,24 +3,42 @@ template:
   bootstrap: 5
 
 reference:
-  - title: Construct
-    desc: Create `ifc_date` vectors.
+  - title: IFC dates
+    desc: Construct and work with `ifc_date` vectors.
     contents:
       - ifc_date
       - ifc_ymd
       - ifc_year_day
       - ifc_leap_day
       - ifc_today
-
-  - title: Access
-    desc: Extract components from an `ifc_date`.
-    contents:
       - ifc_accessors
-
-  - title: Format and coerce
-    contents:
       - format.ifc_date
       - ifc_coerce
+
+  - title: IFC datetimes
+    desc: Construct and work with `ifc_datetime` vectors (date + time + timezone).
+    contents:
+      - ifc_datetime
+      - ifc_now
+      - ifc_datetime_accessors
+      - format.ifc_datetime
+      - ifc_datetime_coerce
+
+  - title: Parse
+    desc: Parse IFC-formatted strings back to `ifc_date`.
+    contents:
+      - ifc_parse
+
+  - title: Sequences and arithmetic
+    desc: Generate sequences and perform calendar arithmetic on IFC dates.
+    contents:
+      - ifc_seq
+      - ifc_add
+
+  - title: Rounding
+    desc: Round IFC dates to the nearest week, month, or year boundary.
+    contents:
+      - ifc_round
 
   - title: Constants
     desc: IFC month and weekday name vectors.
