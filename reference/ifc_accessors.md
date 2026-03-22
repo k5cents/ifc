@@ -7,7 +7,7 @@ Extract components from an IFC date
 ``` r
 ifc_year(x)
 
-ifc_month(x)
+ifc_month(x, label = FALSE, abbr = TRUE)
 
 ifc_day(x)
 
@@ -40,7 +40,9 @@ is_leap_day(x)
 
 `ifc_year()`: integer year (same as Gregorian year).
 
-`ifc_month()`: integer month 1–13, or `NA` for Year Day / Leap Day.
+`ifc_month()`: integer month 1–13, or `NA` for Year Day / Leap Day. If
+`label = TRUE`, returns the IFC month name (e.g. `"Sol"`) or abbreviated
+name (e.g. `"Sol"`); intercalary days return `NA_character_`.
 
 `ifc_day()`: integer day 1–28, or `NA` for Year Day / Leap Day.
 
@@ -65,8 +67,12 @@ exactly 52 weeks, this is computed directly from month and day:
 x <- ifc_ymd(2024, 7, 14)
 ifc_year(x)
 #> [1] 2024
-ifc_month(x)  # 7 (Sol)
+ifc_month(x)                          # 7
 #> [1] 7
+ifc_month(x, label = TRUE)            # "Sol"
+#> [1] "Sol"
+ifc_month(x, label = TRUE, abbr = FALSE)  # "Sol"
+#> [1] "Sol"
 ifc_day(x)  # 14
 #> [1] 14
 ifc_yday(x)
