@@ -245,6 +245,15 @@ test_that("as.Date.ifc_datetime() extracts the date in the stored tz", {
   expect_equal(as.Date(x), as.Date("2024-07-14"))
 })
 
+test_that("as.POSIXlt.ifc_datetime() returns POSIXlt with correct components", {
+  x  <- ifc_datetime("2024-07-14 09:30:45", tz = "UTC")
+  lt <- as.POSIXlt(x)
+  expect_s3_class(lt, "POSIXlt")
+  expect_equal(lt$hour, 9L)
+  expect_equal(lt$min, 30L)
+  expect_equal(as.integer(lt$sec), 45L)
+})
+
 test_that("as.character.ifc_datetime() delegates to format()", {
   x <- ifc_datetime("2024-07-14 09:30:00", tz = "UTC")
   expect_equal(as.character(x), format(x))
@@ -255,7 +264,22 @@ test_that("as.double.ifc_datetime() returns epoch seconds", {
   expect_equal(as.double(x), as.double(as.POSIXct("2024-07-14 09:30:00", tz = "UTC")))
 })
 
-# ---- vctrs ptype2 / cast ----------------------------------------------------
+test_that("type_sum.ifc_datetime() returns 'ifcdt'", {
+  x <- ifc_datetime("2024-07-14 09:30:00", tz = "UTC")
+  expect_equal(pillar::type_sum(x), "ifcdt")
+})
+
+# ---- vctrs ptype / cast -----------------------------------------------------
+
+test_that("vec_ptype_abbr.ifc_datetime() returns 'ifcdt'", {
+  x <- ifc_datetime("2024-01-01 00:00:00", tz = "UTC")
+  expect_equal(vctrs::vec_ptype_abbr(x), "ifcdt")
+})
+
+test_that("vec_ptype_full.ifc_datetime() returns 'ifc_datetime'", {
+  x <- ifc_datetime("2024-01-01 00:00:00", tz = "UTC")
+  expect_equal(vctrs::vec_ptype_full(x), "ifc_datetime")
+})
 
 test_that("vec_ptype2(ifc_datetime, ifc_datetime) returns ifc_datetime ptype", {
   x <- ifc_datetime("2024-01-01 00:00:00", tz = "UTC")
@@ -271,11 +295,24 @@ test_that("vec_ptype2(ifc_datetime, POSIXct) returns ifc_datetime ptype", {
   expect_s3_class(p, "ifc_datetime")
 })
 
+test_that("vec_ptype2(POSIXct, ifc_datetime) returns ifc_datetime ptype", {
+  x  <- ifc_datetime("2024-01-01 00:00:00", tz = "UTC")
+  pt <- as.POSIXct("2024-01-01", tz = "UTC")
+  p  <- vctrs::vec_ptype2(pt, x)
+  expect_s3_class(p, "ifc_datetime")
+})
+
 test_that("vec_cast(POSIXct, ifc_datetime) casts correctly", {
   pt <- as.POSIXct("2024-07-14 09:30:00", tz = "UTC")
   x  <- vctrs::vec_cast(pt, new_ifc_datetime())
   expect_s3_class(x, "ifc_datetime")
   expect_equal(vctrs::vec_data(x), as.double(pt))
+})
+
+test_that("vec_cast(ifc_datetime, ifc_datetime) returns input unchanged", {
+  x <- ifc_datetime("2024-07-14 09:30:00", tz = "UTC")
+  y <- vctrs::vec_cast(x, new_ifc_datetime())
+  expect_identical(x, y)
 })
 
 # ---- lubridate compat -------------------------------------------------------
