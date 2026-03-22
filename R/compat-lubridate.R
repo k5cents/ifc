@@ -14,10 +14,7 @@ year.ifc_date <- function(x) {
 
 # lubridate::month() signature: month(x, label = FALSE, abbr = TRUE, locale, ...)
 month.ifc_date <- function(x, label = FALSE, abbr = TRUE, ...) {
-  m <- ifc_month(x)
-  if (!label) return(m)
-  nm <- if (abbr) IFC_MONTH_ABBR else IFC_MONTH_NAMES
-  ifelse(is.na(m), NA_character_, nm[m])
+  ifc_month(x, label = label, abbr = abbr)
 }
 
 # lubridate uses mday() for day-of-month; day() is an alias
@@ -59,10 +56,7 @@ year.ifc_datetime <- function(x) {
 }
 
 month.ifc_datetime <- function(x, label = FALSE, abbr = TRUE, ...) {
-  m <- ifc_month(ifc_date(as.Date(x)))
-  if (!label) return(m)
-  nm <- if (abbr) IFC_MONTH_ABBR else IFC_MONTH_NAMES
-  ifelse(is.na(m), NA_character_, nm[m])
+  ifc_month(ifc_date(as.Date(x)), label = label, abbr = abbr)
 }
 
 mday.ifc_datetime <- function(x) {

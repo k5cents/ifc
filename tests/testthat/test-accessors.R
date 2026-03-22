@@ -14,6 +14,27 @@ test_that("ifc_month() returns NA for special days", {
   expect_true(is.na(ifc_month(ifc_leap_day(2024))))
 })
 
+test_that("ifc_month(label = TRUE) returns abbreviated month names", {
+  expect_equal(ifc_month(ifc_ymd(2024, 1,  1), label = TRUE), "Jan")
+  expect_equal(ifc_month(ifc_ymd(2024, 7,  1), label = TRUE), "Sol")
+  expect_equal(ifc_month(ifc_ymd(2024, 13, 1), label = TRUE), "Dec")
+})
+
+test_that("ifc_month(label = TRUE, abbr = FALSE) returns full month names", {
+  expect_equal(ifc_month(ifc_ymd(2024, 7, 1), label = TRUE, abbr = FALSE), "Sol")
+  expect_equal(ifc_month(ifc_ymd(2024, 1, 1), label = TRUE, abbr = FALSE), "January")
+})
+
+test_that("ifc_month(label = TRUE) returns NA_character_ for special days", {
+  expect_identical(ifc_month(ifc_year_day(2024), label = TRUE), NA_character_)
+  expect_identical(ifc_month(ifc_leap_day(2024), label = TRUE), NA_character_)
+})
+
+test_that("ifc_month(label = TRUE) is vectorised", {
+  x <- c(ifc_ymd(2024, 1, 1), ifc_ymd(2024, 7, 1), ifc_year_day(2024))
+  expect_equal(ifc_month(x, label = TRUE), c("Jan", "Sol", NA_character_))
+})
+
 test_that("ifc_day() returns 1-28 for regular days", {
   x <- ifc_ymd(2024, 7, 14)
   expect_identical(ifc_day(x), 14L)

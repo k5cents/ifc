@@ -14,7 +14,7 @@
 \usage{
 ifc_year(x)
 
-ifc_month(x)
+ifc_month(x, label = FALSE, abbr = TRUE)
 
 ifc_day(x)
 
@@ -39,6 +39,8 @@ is_leap_day(x)
 \code{ifc_year()}: integer year (same as Gregorian year).
 
 \code{ifc_month()}: integer month 1–13, or \code{NA} for Year Day / Leap Day.
+If \code{label = TRUE}, returns the IFC month name (e.g. \code{"Sol"}) or
+abbreviated name (e.g. \code{"Sol"}); intercalary days return \code{NA_character_}.
 
 \code{ifc_day()}: integer day 1–28, or \code{NA} for Year Day / Leap Day.
 
@@ -63,7 +65,9 @@ Extract components from an IFC date
 \examples{
 x <- ifc_ymd(2024, 7, 14)
 ifc_year(x)
-ifc_month(x)  # 7 (Sol)
+ifc_month(x)                          # 7
+ifc_month(x, label = TRUE)            # "Sol"
+ifc_month(x, label = TRUE, abbr = FALSE)  # "Sol"
 ifc_day(x)  # 14
 ifc_yday(x)
 ifc_wday(x)           # 7 (Saturday: day 14 = (14-1)\%\%7+1 = 7)

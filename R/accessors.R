@@ -17,12 +17,19 @@ ifc_year <- function(x) {
 
 #' @rdname ifc_accessors
 #' @return `ifc_month()`: integer month 1–13, or `NA` for Year Day / Leap Day.
+#'   If `label = TRUE`, returns the IFC month name (e.g. `"Sol"`) or
+#'   abbreviated name (e.g. `"Sol"`); intercalary days return `NA_character_`.
 #' @export
 #' @examples
-#' ifc_month(x)  # 7 (Sol)
-ifc_month <- function(x) {
+#' ifc_month(x)                          # 7
+#' ifc_month(x, label = TRUE)            # "Sol"
+#' ifc_month(x, label = TRUE, abbr = FALSE)  # "Sol"
+ifc_month <- function(x, label = FALSE, abbr = TRUE) {
   vec_assert(x, new_ifc_date())
-  ifc_decompose(x)$month
+  m <- ifc_decompose(x)$month
+  if (!label) return(m)
+  nm <- if (abbr) IFC_MONTH_ABBR else IFC_MONTH_NAMES
+  ifelse(is.na(m), NA_character_, nm[m])
 }
 
 #' @rdname ifc_accessors
