@@ -23,8 +23,8 @@ An `ifc_datetime` of length 1 representing right now.
 ``` r
 ifc_now()
 #> <ifc_datetime[1] tz=UTC>
-#> [1] "2026-03-18 22:49:40 UTC"
+#> [1] "2026-03-25 01:56:04 UTC"
 ifc_now("America/New_York")
 #> <ifc_datetime[1] tz=America/New_York>
-#> [1] "2026-03-18 18:49:40 EDT"
+#> [1] "2026-03-24 21:56:04 EDT"
 ```
