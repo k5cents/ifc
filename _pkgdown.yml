@@ -1,6 +1,7 @@
 url: https://k5cents.github.io/ifc/
 template:
   bootstrap: 5
+logo: man/figures/logo.png
 
 reference:
   - title: IFC dates

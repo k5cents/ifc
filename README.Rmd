@@ -21,7 +21,7 @@ if (!interactive()) {
 }
 ```
 
-# ifc
+# ifc <img src="man/figures/logo.png" align="right" height="139" alt="" />
 
 <!-- badges: start -->
 [![Lifecycle: experimental][life_badge]][life_link]
