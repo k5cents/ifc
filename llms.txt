@@ -10,7 +10,13 @@ deterministic from the day-of-month number.
 
 ## Installation
 
-Install the development version from
+Install from [CRAN](https://CRAN.R-project.org/package=ifc):
+
+``` r
+install.packages("ifc")
+```
+
+Or install the development version from
 [GitHub](https://github.com/k5cents/ifc):
 
 ``` r

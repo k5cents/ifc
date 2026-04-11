@@ -1,5 +1,146 @@
 # Changelog
 
+## ifc 1.0.0
+
+- New `ifc_interval(start, end)` creates an interval between two
+  `ifc_date` values. Dividing by a unit string returns the span in that
+  unit: `iv / "day"` (integer days), `iv / "week"` (days / 7),
+  `iv / "month"` (days / 28). IFC’s fixed-length units make month and
+  week division exact for spans between regular IFC dates (closes
+  [\#9](https://github.com/k5cents/ifc/issues/9)).
+
+- New `ifc_datetime` class — an IFC-aware datetime backed by POSIXct
+  seconds since epoch, with timezone support. Construct via
+  `ifc_datetime(x, tz)` from `POSIXct`, `POSIXlt`, `character` (ISO
+  8601), `ifc_date` (promoted to midnight), or numeric epoch seconds.
+  `ifc_now(tz)` returns the current instant. New time-component
+  accessors
+  [`ifc_hour()`](https://k5cents.github.io/ifc/reference/ifc_datetime_accessors.md),
+  [`ifc_minute()`](https://k5cents.github.io/ifc/reference/ifc_datetime_accessors.md),
+  and
+  [`ifc_second()`](https://k5cents.github.io/ifc/reference/ifc_datetime_accessors.md)
+  extract sub-day components.
+  [`format.ifc_datetime()`](https://k5cents.github.io/ifc/reference/format.ifc_datetime.md)
+  extends IFC date tokens with `%H`, `%M`, `%S`, `%Z`, and `%z`;
+  intercalary days (`%B` / `%b`) render as `"Year Day"` or `"Leap Day"`
+  while time tokens remain fully functional. Includes full tibble/pillar
+  integration (`type_sum`, `pillar_shaft`) and coercion to `POSIXct`,
+  `POSIXlt`, `Date`, and `character`. lubridate compat methods (`year`,
+  `month`, `mday`, `wday`, `yday`, `tz`, `as_date`, `with_tz`,
+  `force_tz`) are registered for `ifc_datetime`; `as_datetime.ifc_date`
+  promotes an `ifc_date` to `ifc_datetime` at midnight in the specified
+  timezone.
+
+- [`ifc_floor()`](https://k5cents.github.io/ifc/reference/ifc_round.md),
+  [`ifc_ceiling()`](https://k5cents.github.io/ifc/reference/ifc_round.md),
+  and
+  [`ifc_round()`](https://k5cents.github.io/ifc/reference/ifc_round.md)
+  round an `ifc_date` to the nearest `"week"`, `"month"`, or `"year"`
+  boundary. IFC’s fixed-length units make these exact: week = 7 days,
+  month = 28 days. Intercalary days are handled explicitly: their week
+  floor is the preceding Sunday (7 days back), their month floor is day
+  1 of the preceding month (28 days back), and their ceiling always
+  advances to the next regular boundary (Leap Day -\> Sol 1; Year Day
+  -\> Jan 1 of following year). Ties in
+  [`ifc_round()`](https://k5cents.github.io/ifc/reference/ifc_round.md)
+  go to the floor.
+
+- New
+  [`ifc_week()`](https://k5cents.github.io/ifc/reference/ifc_accessors.md)
+  accessor returns the IFC week-of-year (1–52) for regular dates, and
+  `NA` for Year Day / Leap Day. Because every IFC month is exactly 4
+  weeks, this is computed directly from month and day:
+  `(month - 1) * 4 + ceiling(day / 7)`.
+
+- New calendar arithmetic functions
+  [`add_months()`](https://k5cents.github.io/ifc/reference/ifc_add.md),
+  [`add_years()`](https://k5cents.github.io/ifc/reference/ifc_add.md),
+  and
+  [`add_weeks()`](https://k5cents.github.io/ifc/reference/ifc_add.md)
+  for adding whole IFC units to a date.
+  [`add_months()`](https://k5cents.github.io/ifc/reference/ifc_add.md)
+  and
+  [`add_years()`](https://k5cents.github.io/ifc/reference/ifc_add.md)
+  use calendar arithmetic (same IFC day-of-month preserved), correctly
+  handling the June/Sol boundary in leap years. All three functions
+  recycle `x` and `n` to a common length.
+
+- New `ifc_seq(from, to, by, length.out)` generates IFC-native date
+  sequences. `by` accepts `"day"`, `"week"`, `"month"`, or `"year"`.
+  Month and year stepping use calendar arithmetic (same IFC day-of-month
+  preserved) rather than raw day offsets, so the June/Sol boundary in
+  leap years is handled correctly. Direction is inferred automatically
+  from `from` and `to`.
+
+- New `ifc_parse(x, format = "%Y-%m-%d")` parses IFC date strings back
+  to `ifc_date` objects, completing the round-trip with
+  [`format.ifc_date()`](https://k5cents.github.io/ifc/reference/format.ifc_date.md).
+  Supports the same token set (`%Y`, `%m`, `%d`, `%B`, `%b`, `%j`,
+  `%y`). Intercalary days (`"YYYY Year Day"`, `"YYYY Leap Day"`) are
+  always recognised by their canonical string form regardless of
+  `format`.
+
+- Added
+  [`ifc_today()`](https://k5cents.github.io/ifc/reference/ifc_today.md)
+  as a convenience wrapper for `ifc_date(Sys.Date())`.
+
+- `floor_date.ifc_date()`, `ceiling_date.ifc_date()`, and
+  `round_date.ifc_date()` are registered as lubridate compat methods,
+  delegating to
+  [`ifc_floor()`](https://k5cents.github.io/ifc/reference/ifc_round.md),
+  [`ifc_ceiling()`](https://k5cents.github.io/ifc/reference/ifc_round.md),
+  and
+  [`ifc_round()`](https://k5cents.github.io/ifc/reference/ifc_round.md).
+  Unit strings follow lubridate conventions including plurals
+  (`"weeks"`) and `"N unit"` forms (`"2 months"`); sub-day units and
+  `"day"` return the input unchanged. **Note:** lubridate \>= 1.9
+  delegates these generics to the **timechange** package, which does not
+  use S3 dispatch, so `lubridate::floor_date(x)` will not transparently
+  dispatch for `ifc_date` objects under that version. Call
+  [`ifc_floor()`](https://k5cents.github.io/ifc/reference/ifc_round.md)
+  /
+  [`ifc_ceiling()`](https://k5cents.github.io/ifc/reference/ifc_round.md)
+  /
+  [`ifc_round()`](https://k5cents.github.io/ifc/reference/ifc_round.md)
+  directly as the reliable alternative.
+
+- `ifc_date` now integrates with **lubridate**:
+  [`lubridate::year()`](https://lubridate.tidyverse.org/reference/year.html),
+  [`lubridate::month()`](https://lubridate.tidyverse.org/reference/month.html),
+  [`lubridate::mday()`](https://lubridate.tidyverse.org/reference/day.html),
+  [`lubridate::wday()`](https://lubridate.tidyverse.org/reference/day.html),
+  [`lubridate::yday()`](https://lubridate.tidyverse.org/reference/day.html),
+  and
+  [`lubridate::as_date()`](https://lubridate.tidyverse.org/reference/as_date.html)
+  all return correct IFC values when called on an `ifc_date`.
+  Previously, these functions fell back to
+  [`as.POSIXlt()`](https://rdrr.io/r/base/as.POSIXlt.html) and returned
+  Gregorian month/day values, which are wrong for IFC dates
+  (e.g. [`lubridate::month()`](https://lubridate.tidyverse.org/reference/month.html)
+  on an IFC Sol date would return 6 or 7 depending on the Gregorian
+  month, rather than 7). lubridate is not a hard dependency; the methods
+  are registered at load time and only activate if lubridate is
+  installed.
+
+- [`ifc_date()`](https://k5cents.github.io/ifc/reference/ifc_date.md)
+  now correctly errors on unparseable character strings such as
+  `ifc_date("not-a-date")`. Previously, invalid strings silently
+  produced an `ifc_date` wrapping `NA` because
+  [`as.Date()`](https://rdrr.io/r/base/as.Date.html) returns `NA` with a
+  warning rather than throwing an error.
+
+- [`format.ifc_date()`](https://k5cents.github.io/ifc/reference/format.ifc_date.md)
+  now correctly replaces all occurrences of a token when the same token
+  appears more than once in the format string (e.g. `format(x, "%Y/%Y")`
+  now returns `"2024/2024"`). Previously only the first occurrence was
+  replaced.
+
+- Accessor functions
+  ([`ifc_year()`](https://k5cents.github.io/ifc/reference/ifc_accessors.md),
+  [`ifc_month()`](https://k5cents.github.io/ifc/reference/ifc_accessors.md),
+  etc.) now produce a proper vctrs type error when passed a
+  non-`ifc_date` object instead of the opaque `stopifnot` message.
+
 ## ifc 0.1.0
 
 - Initial release.
