@@ -49,6 +49,17 @@
 
 * Added `ifc_today()` as a convenience wrapper for `ifc_date(Sys.Date())`.
 
+* `floor_date.ifc_date()`, `ceiling_date.ifc_date()`, and
+  `round_date.ifc_date()` are registered as lubridate compat methods, delegating
+  to `ifc_floor()`, `ifc_ceiling()`, and `ifc_round()`. Unit strings follow
+  lubridate conventions including plurals (`"weeks"`) and `"N unit"` forms
+  (`"2 months"`); sub-day units and `"day"` return the input unchanged.
+  **Note:** lubridate >= 1.9 delegates these generics to the **timechange**
+  package, which does not use S3 dispatch, so `lubridate::floor_date(x)`
+  will not transparently dispatch for `ifc_date` objects under that version.
+  Call `ifc_floor()` / `ifc_ceiling()` / `ifc_round()` directly as the
+  reliable alternative.
+
 * `ifc_date` now integrates with **lubridate**: `lubridate::year()`,
   `lubridate::month()`, `lubridate::mday()`, `lubridate::wday()`,
   `lubridate::yday()`, and `lubridate::as_date()` all return correct IFC values
