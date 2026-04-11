@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/ifc)](https://CRAN.R-project.org/package=ifc)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Codecov test
@@ -23,7 +25,13 @@ deterministic from the day-of-month number.
 
 ## Installation
 
-Install the development version from
+Install from [CRAN](https://CRAN.R-project.org/package=ifc):
+
+``` r
+install.packages("ifc")
+```
+
+Or install the development version from
 [GitHub](https://github.com/k5cents/ifc):
 
 ``` r

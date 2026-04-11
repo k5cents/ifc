@@ -1,4 +1,4 @@
-# ifc (development)
+# ifc 1.0.0
 
 * New `ifc_interval(start, end)` creates an interval between two `ifc_date`
   values. Dividing by a unit string returns the span in that unit:

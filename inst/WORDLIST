@@ -3,7 +3,10 @@ IFC's
 Intercalary
 Lifecycle
 ORCID
+POSIXct
 behaviour
+coercible
+compat
 datetime
 incrementing
 intercalary
@@ -11,5 +14,6 @@ lubridate
 recognised
 strftime
 tibble
+timechange
 unparseable
 vctrs

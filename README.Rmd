@@ -24,6 +24,7 @@ if (!interactive()) {
 # ifc <img src="man/figures/logo.png" align="right" height="139" alt="" />
 
 <!-- badges: start -->
+[![CRAN status][cran_badge]][cran_link]
 [![Lifecycle: experimental][life_badge]][life_link]
 [![Codecov test coverage][cov_badge]][cov_link]
 [![R build status][ga_badge]][ga_link]
@@ -38,9 +39,15 @@ number.
 
 ## Installation
 
-Install the development version from [GitHub][gh]:
+Install from [CRAN][cran_link]:
 
 ```{r install, eval=FALSE}
+install.packages("ifc")
+```
+
+Or install the development version from [GitHub][gh]:
+
+```{r install-dev, eval=FALSE}
 # install.packages("pak")
 pak::pak("k5cents/ifc")
 ```

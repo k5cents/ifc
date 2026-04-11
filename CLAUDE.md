@@ -95,10 +95,10 @@ devtools::test()       # run tests
 
 At the beginning of every session, before touching any code:
 
-1. **Scan open GitHub issues** — especially the v0.2.0 milestone:
+1. **Scan open GitHub issues** — especially the v1.1.0 milestone:
    ```bash
    gh issue list --state open
-   gh issue list --milestone v0.2.0
+   gh issue list --milestone v1.1.0
    ```
 
 2. **Check CI status** — confirm all workflows are green before adding new work:
