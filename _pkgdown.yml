@@ -35,6 +35,8 @@ reference:
     contents:
       - ifc_seq
       - ifc_add
+      - ifc_interval
+      - "/.ifc_interval"
 
   - title: Rounding
     desc: Round IFC dates to the nearest week, month, or year boundary.
