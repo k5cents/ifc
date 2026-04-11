@@ -38,5 +38,5 @@ ifc_datetime(ifc_ymd(2024, 7, 14), tz = "UTC")
 #> [1] "2024-07-14 00:00:00 UTC"
 ifc_datetime(Sys.time())
 #> <ifc_datetime[1] tz=UTC>
-#> [1] "2026-03-25 21:32:15 UTC"
+#> [1] "2026-04-17 02:50:03 UTC"
 ```

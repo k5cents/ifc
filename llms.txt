@@ -171,6 +171,10 @@ Generate sequences and perform calendar arithmetic on IFC dates.
   [`add_months()`](https://k5cents.github.io/ifc/reference/ifc_add.md)
   [`add_years()`](https://k5cents.github.io/ifc/reference/ifc_add.md) :
   Add IFC calendar units to a date
+- [`ifc_interval()`](https://k5cents.github.io/ifc/reference/ifc_interval.md)
+  : Create an interval between two IFC dates
+- [`` `/`( ``*`<ifc_interval>`*`)`](https://k5cents.github.io/ifc/reference/slash-.ifc_interval.md)
+  : Divide an IFC interval by a time unit
 
 ## Rounding
 
