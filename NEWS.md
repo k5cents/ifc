@@ -1,5 +1,11 @@
 # ifc (development)
 
+* New `ifc_interval(start, end)` creates an interval between two `ifc_date`
+  values. Dividing by a unit string returns the span in that unit:
+  `iv / "day"` (integer days), `iv / "week"` (days / 7), `iv / "month"`
+  (days / 28). IFC's fixed-length units make month and week division exact
+  for spans between regular IFC dates (closes #9).
+
 * New `ifc_datetime` class — an IFC-aware datetime backed by POSIXct seconds
   since epoch, with timezone support. Construct via `ifc_datetime(x, tz)` from
   `POSIXct`, `POSIXlt`, `character` (ISO 8601), `ifc_date` (promoted to
