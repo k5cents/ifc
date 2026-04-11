@@ -49,6 +49,58 @@ as_datetime.ifc_date <- function(x, tz = "UTC", ...) {
   ifc_datetime(x, tz = tz)
 }
 
+# ---- floor_date / ceiling_date / round_date compat --------------------------
+
+# Map lubridate unit strings to IFC round units.
+# lubridate accepts plurals ("weeks"), "N unit" forms ("2 weeks"), and aliases.
+# Sub-day units and "day" collapse to "day" (ifc_date is day-precision).
+# Unsupported units ("bimonth", "quarter", etc.) abort with a clear message.
+.lubridate_to_ifc_unit <- function(unit) {
+  u <- tolower(trimws(unit))
+  # Strip leading count ("2 weeks" -> "weeks")
+  u <- sub("^[0-9]+\\s+", "", u)
+  # Strip trailing 's' for plurals ("weeks" -> "week")
+  u <- sub("s$", "", u)
+  switch(u,
+    second = , minute = , hour = , day = "day",
+    week  = "week",
+    month = "month",
+    year  = "year",
+    cli_abort(
+      paste0(
+        "{.arg unit} {.val {unit}} is not supported for {.cls ifc_date}. ",
+        "Use {.or {.val {c('day', 'week', 'month', 'year')}}}."
+      ),
+      call = caller_env()
+    )
+  )
+}
+
+floor_date.ifc_date <- function(x, unit = "second",
+                                week_start = getOption("lubridate.week.start", 7),
+                                ...) {
+  u <- .lubridate_to_ifc_unit(unit)
+  if (u == "day") return(x)
+  ifc_floor(x, u)
+}
+
+ceiling_date.ifc_date <- function(x, unit = "second",
+                                  change_on_boundary = NULL,
+                                  week_start = getOption("lubridate.week.start", 7),
+                                  ...) {
+  u <- .lubridate_to_ifc_unit(unit)
+  if (u == "day") return(x)
+  ifc_ceiling(x, u)
+}
+
+round_date.ifc_date <- function(x, unit = "second",
+                                week_start = getOption("lubridate.week.start", 7),
+                                ...) {
+  u <- .lubridate_to_ifc_unit(unit)
+  if (u == "day") return(x)
+  ifc_round(x, u)
+}
+
 # ---- ifc_datetime compat methods ----
 
 year.ifc_datetime <- function(x) {

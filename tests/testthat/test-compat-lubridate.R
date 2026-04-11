@@ -69,6 +69,61 @@ test_that("lubridate::as_datetime() on ifc_date returns midnight POSIXct", {
   expect_equal(as.integer(dt) %% 86400L, 0L)  # midnight = 0 seconds into day
 })
 
+# ---- floor_date / ceiling_date / round_date ---------------------------------
+# NOTE: lubridate >= 1.9 delegates floor_date/ceiling_date/round_date to the
+# timechange package, which does not use S3 dispatch and rejects unknown classes.
+# Transparent `lubridate::floor_date(x)` dispatch is therefore not possible.
+# The methods are registered via s3_register() for future compatibility (in case
+# lubridate reverts to UseMethod dispatch) and for explicit method invocation.
+# Users should call ifc_floor() / ifc_ceiling() / ifc_round() directly.
+
+test_that("floor_date.ifc_date() floors to week boundary", {
+  x <- ifc_ymd(2024, 7, 14)  # Sol 14 (Saturday)
+  expect_equal(ifc:::floor_date.ifc_date(x, "week"), ifc_ymd(2024, 7, 8))  # Sol 8 (Sunday)
+})
+
+test_that("floor_date.ifc_date() floors to month boundary", {
+  x <- ifc_ymd(2024, 7, 14)
+  expect_equal(ifc:::floor_date.ifc_date(x, "month"), ifc_ymd(2024, 7, 1))
+})
+
+test_that("floor_date.ifc_date() floors to year boundary", {
+  x <- ifc_ymd(2024, 7, 14)
+  expect_equal(ifc:::floor_date.ifc_date(x, "year"), ifc_ymd(2024, 1, 1))
+})
+
+test_that("floor_date.ifc_date() returns x unchanged for 'day'", {
+  x <- ifc_ymd(2024, 7, 14)
+  expect_equal(ifc:::floor_date.ifc_date(x, "day"), x)
+})
+
+test_that("floor_date.ifc_date() accepts plural unit forms", {
+  x <- ifc_ymd(2024, 7, 14)
+  expect_equal(ifc:::floor_date.ifc_date(x, "weeks"),  ifc_ymd(2024, 7, 8))
+  expect_equal(ifc:::floor_date.ifc_date(x, "months"), ifc_ymd(2024, 7, 1))
+})
+
+test_that("ceiling_date.ifc_date() advances to next week boundary", {
+  x <- ifc_ymd(2024, 7, 14)  # Sol 14 (Saturday)
+  expect_equal(ifc:::ceiling_date.ifc_date(x, "week"), ifc_ymd(2024, 7, 15))  # Sol 15
+})
+
+test_that("ceiling_date.ifc_date() advances to next month boundary", {
+  x <- ifc_ymd(2024, 7, 14)
+  expect_equal(ifc:::ceiling_date.ifc_date(x, "month"), ifc_ymd(2024, 8, 1))
+})
+
+test_that("round_date.ifc_date() rounds to nearest boundary", {
+  # Sol 14 — 13 days from Sol 1, 14 days from Aug 1 → floor
+  x <- ifc_ymd(2024, 7, 14)
+  expect_equal(ifc:::round_date.ifc_date(x, "month"), ifc_ymd(2024, 7, 1))
+})
+
+test_that("floor_date.ifc_date() errors on unsupported unit", {
+  x <- ifc_ymd(2024, 7, 14)
+  expect_error(ifc:::floor_date.ifc_date(x, "quarter"), class = "rlang_error")
+})
+
 # ---- ifc_datetime lubridate compat ------------------------------------------
 
 test_that("lubridate::month(label=TRUE) returns IFC month name for ifc_datetime", {

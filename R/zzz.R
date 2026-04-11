@@ -8,6 +8,9 @@
   vctrs::s3_register("lubridate::as_date",     "ifc_date")
   vctrs::s3_register("lubridate::as_datetime", "ifc_date")
   vctrs::s3_register("lubridate::tz",          "ifc_date")
+  vctrs::s3_register("lubridate::floor_date",   "ifc_date")
+  vctrs::s3_register("lubridate::ceiling_date", "ifc_date")
+  vctrs::s3_register("lubridate::round_date",   "ifc_date")
 
   # ifc_datetime compat
   vctrs::s3_register("lubridate::year",        "ifc_datetime")
